@@ -53,3 +53,29 @@ JUMP_TABLE = {
     "JLE": "110",
     "JMP": "111",
 }
+
+A_INSTR_PREFIX = "011"
+C_INSTR_PREFIX = "111"
+
+
+def translate_a_instruction(address: str) -> str:
+    binary_address = bin(int(address))
+    return binary_address
+
+
+def translate_c_instruction(dest: str, comp: str, jump: str) -> str:
+    dest_binary = DEST_TABLE.get(dest)
+    comp_binary = COMP_TABLE.get(dest)
+    jump_binary = JUMP_TABLE.get(dest)
+
+    if not dest_binary:
+        raise ValueError("Invalid dest portion of instruction")
+
+    if not comp_binary:
+        raise ValueError("Invalid comp portion of instruction")
+
+    if not jump_binary:
+        raise ValueError("Invalid jump portion of instruction")
+
+    result = "{}{}{}{}".format(C_INSTR_PREFIX, comp_binary, dest_binary, jump_binary)
+    return result

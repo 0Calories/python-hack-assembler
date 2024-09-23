@@ -2,6 +2,22 @@
 from .translate_code import translate_a_instruction, translate_c_instruction
 
 
+def parse_line(line: str) -> None | str:
+    if line.startswith("("):
+        if not line.endswith(")"):
+            raise SyntaxError("Label instruction must be closed with )")
+
+        label = line[1:-1]
+        parse_label(label)
+        return None
+
+    # Skip whitespace
+    if line.startswith(" "):
+        return None
+
+    return parse_and_translate_instruction(line)
+
+
 def parse_and_translate_instruction(instruction: str) -> str:
     if instruction.startswith("@"):
         result = parse_a_instruction(instruction)
@@ -35,3 +51,7 @@ def parse_c_instruction(instruction: str) -> tuple[str, str, str]:
 
 def parse_a_instruction(instruction: str) -> str:
     return instruction[1:]
+
+
+def parse_label(label: str):
+    print(label)

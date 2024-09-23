@@ -3,6 +3,16 @@ from .translate_code import translate_a_instruction, translate_c_instruction
 
 
 def parse_line(line: str) -> None | str:
+    line = line.strip()
+
+    # Skip whitespace
+    if line == "":
+        return None
+
+    # Handle inline comments
+    if line.split("//")[1]:
+        line = line[0].strip()
+
     if line.startswith("("):
         if not line.endswith(")"):
             raise SyntaxError("Label instruction must be closed with )")
@@ -11,9 +21,12 @@ def parse_line(line: str) -> None | str:
         parse_label(label)
         return None
 
-    # Skip whitespace
-    if line.startswith(" "):
-        return None
+    # Handle variables
+    if line.startswith("@"):
+        maybe_variable = line.split("@")[1]
+        if not maybe_variable.isdigit():
+            # Stubbed: Add to the symbol table here
+            return
 
     return parse_and_translate_instruction(line)
 
@@ -36,6 +49,8 @@ def parse_instruction(instruction: str):
 
 
 def parse_c_instruction(instruction: str) -> tuple[str, str, str]:
+    # TODO: Dest and jump are optional. Update this to handle the case when there is no dest.
+
     split_instruction = instruction.split("=")
     dest = split_instruction[0]
 

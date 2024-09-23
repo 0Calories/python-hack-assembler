@@ -8,9 +8,6 @@ def parse_and_translate_instruction(instruction: str) -> str:
         return translate_a_instruction(result)
 
     dest, comp, jump = parse_c_instruction(instruction)
-    print(dest)
-    print(comp)
-    print(jump)
 
     return translate_c_instruction(dest, comp, jump)
 

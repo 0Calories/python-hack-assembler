@@ -59,8 +59,11 @@ C_INSTR_PREFIX = "111"
 
 
 def translate_a_instruction(address: str) -> str:
-    binary_address = bin(int(address))
-    return binary_address
+    # `bin` will prefix the binary string with 0b which we do not want
+    binary_address = bin(int(address))[2:]
+    # Zero-fills the left side until it is 16 bits
+    # This will be a valid binary A instruction
+    return binary_address.zfill(16)
 
 
 def translate_c_instruction(dest: str, comp: str, jump: str) -> str:

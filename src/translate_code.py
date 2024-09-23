@@ -65,8 +65,8 @@ def translate_a_instruction(address: str) -> str:
 
 def translate_c_instruction(dest: str, comp: str, jump: str) -> str:
     dest_binary = DEST_TABLE.get(dest)
-    comp_binary = COMP_TABLE.get(dest)
-    jump_binary = JUMP_TABLE.get(dest)
+    comp_binary = COMP_TABLE.get(comp)
+    jump_binary = JUMP_TABLE.get(jump)
 
     if not dest_binary:
         raise ValueError("Invalid dest portion of instruction")

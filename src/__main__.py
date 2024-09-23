@@ -1,11 +1,12 @@
 # type: ignore
-from parser import parse_instruction
-from translate_code import translate_a_instruction, translate_c_instruction
+from .parser import parse_and_translate_instruction
 
 
 def main():
     user_input = input("Enter the full instruction: ")
-    parse_instruction(user_input)
+    binary_instruction = parse_and_translate_instruction(user_input)
+
+    print(binary_instruction)
 
 
 if __name__ == "__main__":

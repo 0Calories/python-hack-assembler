@@ -1,6 +1,23 @@
-def parse_instruction(instruction: str):
+# type: ignore
+from .translate_code import translate_a_instruction, translate_c_instruction
+
+
+def parse_and_translate_instruction(instruction: str) -> str:
     if instruction.startswith("@"):
-        parse_a_instruction(instruction)
+        result = parse_a_instruction(instruction)
+        return translate_a_instruction(result)
+
+    dest, comp, jump = parse_c_instruction(instruction)
+    print(dest)
+    print(comp)
+    print(jump)
+
+    return translate_c_instruction(dest, comp, jump)
+
+
+def parse_instruction(instruction: str):
+    if not instruction.startswith("@"):
+        raise ValueError("Expected A instruction to start with @")
 
     parse_c_instruction(instruction)
 
@@ -20,5 +37,4 @@ def parse_c_instruction(instruction: str) -> tuple[str, str, str]:
 
 
 def parse_a_instruction(instruction: str) -> str:
-    print("Stubbed")
-    return ""
+    return instruction[1:]

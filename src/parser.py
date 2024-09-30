@@ -24,14 +24,15 @@ class Parser:
         try:
             with open(self.file, "r") as file:
                 for line in file:
-                    self.read_line(line)
+                    translatedLine = parse_line(line)
+
+                    if translatedLine is not None:
+                        self.lineNum += 1
+                        print(translatedLine)
 
         except FileNotFoundError:
             print(f"File {self.file} not found.")
             return None
-
-    def read_line(self, line):
-        print(line)
 
 
 def parse_line(line: str) -> None | str:
@@ -41,8 +42,12 @@ def parse_line(line: str) -> None | str:
     if line == "":
         return None
 
+    # Skip comment lines
+    if line.startswith("//"):
+        return None
+
     # Handle inline comments
-    if line.split("//")[1]:
+    if len(line.split("//")) > 1:
         line = line[0].strip()
 
     if line.startswith("("):
@@ -58,7 +63,7 @@ def parse_line(line: str) -> None | str:
         maybe_variable = line.split("@")[1]
         if not maybe_variable.isdigit():
             # Stubbed: Add to the symbol table here
-            return
+            return None
 
     return parse_and_translate_instruction(line)
 

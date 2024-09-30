@@ -1,6 +1,38 @@
 # type: ignore
 from .translate_code import translate_a_instruction, translate_c_instruction
 
+# TODO:
+# - Finish the case handling for c instructions
+# - Add a line counter that will keep track of the line number of the current instruction
+# - Map line numbers to instructions during the 'first pass'
+# - The first pass will also assign labels in the symbol table
+# - Finish implementing the symbol table class, add all handling inside the class
+#     - New variables get assigned a unique address starting at 16
+#     - Labels get assigned the line number of the subsequent instruction
+
+
+class Parser:
+    def __init__(self, file: str) -> None:
+        if not file.endswith(".asm"):
+            raise ValueError("Must input a valid .asm file")
+
+        self.lineNum = 0
+        self.file = file
+        self.outputFile = file.replace(".asm", ".hack")
+
+    def assemble(self):
+        try:
+            with open(self.file, "r") as file:
+                for line in file:
+                    self.read_line(line)
+
+        except FileNotFoundError:
+            print(f"File {self.file} not found.")
+            return None
+
+    def read_line(self, line):
+        print(line)
+
 
 def parse_line(line: str) -> None | str:
     line = line.strip()

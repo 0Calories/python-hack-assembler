@@ -1,6 +1,6 @@
 # type: ignore
-from .translate_code import translate_a_instruction, translate_c_instruction
-from .symbol_table import SymbolTable
+from translate_code import translate_a_instruction, translate_c_instruction
+from symbol_table import SymbolTable
 
 
 class Parser:

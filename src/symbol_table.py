@@ -29,3 +29,24 @@ class SymbolTable:
             "THIS": "3",
             "THAT": "4",
         }
+
+        # Addresses for variables start at register 16
+        self.reg_number = 16
+
+    def add_symbol(self, symbol: str) -> str:
+        self.table[symbol] = str(self.reg_number)
+        self.reg_number += 1
+
+        return self.table[symbol]
+
+    # When labels are added, their value is determined by the
+    # line number of the subsequent instruction.
+    # This value is provided by the parser
+    def add_label(self, label: str, value: str):
+        self.table[label] = value
+
+    def get_symbol(self, symbol: str) -> str | None:
+        if symbol not in self.table:
+            return None
+
+        return self.table[symbol]

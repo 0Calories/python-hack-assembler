@@ -1,4 +1,12 @@
-D=1
-D=D+1
+// a comment
+@i
+M=1
+@sum
+M=0
 
-
+(LOOP)
+	@i
+	D=M
+	@LOOP
+	0;JMP
+	

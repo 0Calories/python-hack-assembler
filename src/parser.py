@@ -10,8 +10,10 @@ class Parser:
 
         self.line_num = 0
         self.file = file
-        self.output_file = file.replace(".asm", ".hack")
         self.symbol_table = SymbolTable()
+
+        output_file_name = file.replace(".asm", ".hack")
+        self.output_file = open(output_file_name, "x")
 
     def assemble(self):
         self.first_pass()
@@ -53,6 +55,7 @@ class Parser:
 
                     if translatedLine is not None:
                         print(translatedLine)
+                        self.output_file.write(translatedLine + "\n")
 
         except FileNotFoundError:
             print(f"File {self.file} not found.")
